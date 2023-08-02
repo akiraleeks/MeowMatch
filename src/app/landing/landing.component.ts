@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output, TemplateRef, ViewChild } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { RxjsUtil } from '../util/rxjs';
 import { Observable, of } from 'rxjs';
+import { ICatDetail } from '../app.component';
 
 export interface ICatBreedOptions {
   label: string;
@@ -21,16 +22,23 @@ export interface ICatBreedData{
 })
 export class LandingComponent {
 
+  @Output() detailAction: EventEmitter<ICatDetail> = new EventEmitter();
+
   catBreedData: any[];
   cat: any[];
   carBreedOptions: ICatBreedOptions[] = [];
   selectedCataData: ICatBreedData[] = [];
   showCard$: Observable<boolean>;
+  accessToken: string;
+
+  @ViewChild('detailTemplate', { static: true }) public detailTemplate: TemplateRef<void>;
 
   constructor(private apiService: ApiService) {}
 
   async ngOnInit(): Promise<void> {
     await this.getCatBreedsData();
+    const tokenData = await RxjsUtil.firstValueFrom(this.apiService.getAccessToken());
+    console.log(tokenData);
   }
 
   public async getCatBreedsData(): Promise<void>{
@@ -53,5 +61,14 @@ export class LandingComponent {
       }
     });
     this.showCard$ = this.selectedCataData.length ? of(true) : of(false);
+  }
+
+  public openCatDetails() {
+    this.detailAction.emit({ template: this.detailTemplate, showDetail: true });
+  }
+
+  public async backFromDetail(): Promise<void> {
+    this.detailAction.emit({showDetail: false});
+    await RxjsUtil.sleepAsync(0);
   }
 }

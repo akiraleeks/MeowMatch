@@ -1,1 +1,8 @@
-<app-landing></app-landing>
+<div [hidden]="showDetail">
+    <app-landing (detailAction)="detailAction($event)"></app-landing>
+</div>
+
+<div id="catDetail" *ngIf="showDetail">
+    <ng-container *ngTemplateOutlet="detailTemplate">
+    </ng-container>
+</div>

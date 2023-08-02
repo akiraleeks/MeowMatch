@@ -1,30 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<body id="index">
-
-  <div class="jumbotron text-center" id="home">
-    <h1><img src="../../assets/images/logo.png"></h1>
-    <br />
-    <select id="breeds" class="form-select" (change)="onSelect($event)">
-      <option selected [value]="null">Please choose a cat breed</option>
-      <option *ngFor="let item of carBreedOptions" [value]="item.value">{{item.label}}</option>
-    </select>
-
-    <ng-container *ngIf="(showCard$ | async)">
-      <div *ngFor="let cat of selectedCataData" class="card" style="width: 18rem;">
-      <img src="{{cat.image}}" class="card-img-top">
-      <div class="card-body">
-        <h5 class="card-title">{{cat.name}}</h5>
-        <p class="card-text">{{cat.description}}</p>
+ <body id="index">
+    <div class="jumbotron text-center" id="home">
+      <h1><img src="../../assets/images/logo.png" /></h1>
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <select id="breeds" class="form-select" (change)="onSelect($event)">
+            <option selected [value]="null">Please choose a cat breed</option>
+            <option *ngFor="let item of carBreedOptions" [value]="item.value">
+              {{ item.label }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-4"></div>
       </div>
-      <div class="card-body">
-        <a href="#" class="card-link">See More</a>
+
+      <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4 mt-4 d-flex justify-content-center">
+          <ng-container *ngIf="showCard$ | async">
+            <div
+              *ngFor="let cat of selectedCataData"
+              class="card"
+              style="width: 30rem">
+              <img src="{{ cat.image }}" class="card-img-top" alt="{{cat.name}}" />
+              <div class="card-body">
+                <h5 class="card-title">{{ cat.name }}</h5>
+                <p class="card-text">{{ cat.description }}</p>
+              </div>
+              <div class="card-body">
+                <a class="card-link" (click)=openCatDetails()>Read More</a>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div class="col-md-4">
+        </div>
       </div>
-    </div></ng-container>
 
-  </div>
+    </div>
+  </body>
 
-</body>
-
-</html>
+  <ng-template #detailTemplate>
+    <app-cat-details (goBackAction)="backFromDetail()"></app-cat-details>
+  </ng-template>
