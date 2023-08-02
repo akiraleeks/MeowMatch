@@ -42,5 +42,5 @@
   </body>
 
   <ng-template #detailTemplate>
-    <app-cat-details (goBackAction)="backFromDetail()"></app-cat-details>
+    <app-cat-details  [catDataDetails]="selectedCataData" (goBackAction)="backFromDetail()"></app-cat-details>
   </ng-template>
