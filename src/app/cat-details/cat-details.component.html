@@ -1,34 +1,38 @@
-<div class="container">
+<div class="container" *ngFor="let cat of catDataDetails">
   <div class="row mt-4">
     <div class="col-md-5">
       <div class="mt-0">
-        <h5>{{ catDataDetails[0].name }}</h5>
-        <p class="mb-0">{{ catDataDetails[0].description }}</p>
+        <h2>{{ cat.name }}</h2>
+        <h5>{{cat.altName}}</h5>
+        <p class="mb-0">{{cat.description}}</p>
       </div>
 
-      <div class="info-box">
-        <p><b>Client:</b> CUPCAKE CO</p>
-        <p><b>Date:</b> 14.02.2020</p>
-        <p><b>Designer:</b> James Doe</p>
-        <p><b>Tools:</b> Illustrator</p>
-        <p class="mb-0"><b>Budget:</b> $500</p>
+      <div class="info-box mt-2">
+        <p><b>Adaptability:</b> {{cat.adaptability}}</p>
+        <p><b>Affection Level:</b> {{cat.affectionLevel}}</p>
       </div>
     </div>
 
     <div class="col-md-7">
       <img
-        src="{{ catDataDetails[0].image }}"
-        alt="project-image"
+        src="{{cat.image }}"
+        alt="{{cat.name}}"
         class="rounded"
         style="width: 300px"
       />
-      <div class="project-info-box">
-        <p><b>Categories:</b> Design, Illustration</p>
-        <p><b>Skills:</b> Illustrator</p>
+      <div class="project-info-box mt-2">
+        <p><b>Origin:</b> {{cat.origin}}</p>
+        <p><b>Temperament:</b> {{cat.temperament}}</p>
+        <p><b>Lifespan:</b> {{cat.lifespan}} years</p>
+        <p><b>Weight:</b> {{cat.weight}} pounds</p>
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col text-center mt-2">
+        <button type="button" class="btn btn-primary" (click)="goBack()">
+            Go Back
+          </button>
+      </div>
+  </div>
 </div>
-<button type="button" class="btn btn-primary" (click)="goBack()">
-  Go Back
-</button>
