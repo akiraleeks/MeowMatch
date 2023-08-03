@@ -143,6 +143,7 @@ export class LandingComponent {
   public changeActiveTab(currentTab: string) {
     this.activeTab = currentTab;
     this.hasError = false;
+    this.adoptableCats = null;
   }
 
   public setZipCode(event) {
