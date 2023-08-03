@@ -69,7 +69,7 @@ export class LandingComponent {
   catBreedData: any[];
   cat: any[];
   carBreedOptions: ICatBreedOptions[] = [];
-  selectedCataData: ICatBreedData[] = [];
+  selectedCatData: ICatBreedData[] = [];
   showCard$: Observable<boolean>;
   accessToken: IOauthToken;
   activeTab: string = 'about';
@@ -98,7 +98,7 @@ export class LandingComponent {
 
   public async onSelect(breedSelected: any): Promise<void> {
     const catData = await RxjsUtil.firstValueFrom(this.apiService.getCat(breedSelected.target.value));
-    this.selectedCataData = catData.map((value) => {
+    this.selectedCatData = catData.map((value) => {
       return {
         name: value.breeds[0].name,
         altName: value.breeds[0].alt_names,
@@ -125,7 +125,7 @@ export class LandingComponent {
         hypoallergenic: value.breeds[0].hypoallergenic
       }
     });
-    this.showCard$ = this.selectedCataData.length ? of(true) : of(false);
+    this.showCard$ = this.selectedCatData.length ? of(true) : of(false);
     this.activeTab = 'about';
     this.hasError = false;
     this.adoptableCats = null;
@@ -152,7 +152,8 @@ export class LandingComponent {
   public async searchCatsByZip(): Promise<void>{
     this.hasError = false;
     try {
-      this.adoptableCats = await RxjsUtil.firstValueFrom(this.apiService.getCatsByZip(this.accessToken.access_token, this.selectedCataData[0].name, this.zipCode));
+      this.adoptableCats = await RxjsUtil.firstValueFrom(this.apiService.getCatsByZip(this.accessToken.access_token, this.selectedCatData[0].name, this.zipCode));
+      console.log(this.adoptableCats);
       if (this.adoptableCats.animals.length === 0) {
         this.hasError = true;
       }
